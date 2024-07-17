@@ -10,8 +10,7 @@ jobs:
     
   build:
     needs: [lint]
-    runs-on: on-prem
-    environment: DEV
+    runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:
       id-token: write

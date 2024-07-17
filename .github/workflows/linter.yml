@@ -6,8 +6,7 @@ on:
 jobs:
   super-linter:
     name: Lint
-    runs-on: on-prem
-
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: read

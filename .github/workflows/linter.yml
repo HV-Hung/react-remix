@@ -1,0 +1,46 @@
+name: "Build"
+on:
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  super-linter:
+    name: Lint
+    runs-on: on-prem
+
+    permissions:
+      contents: read
+      packages: read
+      statuses: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: "NodeJS Setup"
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: "Npm Cache of ./node_modules"
+        uses: actions/cache@v4
+        with:
+          key: ${{ runner.os }}-npm
+          path: node_modules
+
+      - name: "Install Dependencies"
+        run: npm install
+
+      - name: Super-linter
+        uses: super-linter/super-linter@v6.7.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_ALL_CODEBASE: true
+          VALIDATE_TYPESCRIPT_ES: true
+          VALIDATE_TYPESCRIPT_STANDARD: true
+          TYPESCRIPT_ES_CONFIG_FILE: .eslintrc.json
+          VALIDATE_TSX: true
+          TSX_LINTER_RULES: .eslintrc.json
+          FILTER_REGEX_EXCLUDE: .*.config|spec|test.ts

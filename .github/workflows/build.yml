@@ -1,0 +1,45 @@
+name: "Build"
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  lint:
+    name: Lint
+    uses: ./.github/workflows/linter.yml
+    
+  build:
+    needs: [lint]
+    runs-on: on-prem
+    environment: DEV
+    timeout-minutes: 30
+    permissions:
+      id-token: write
+      contents: read
+    
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v4
+
+      - name: "NodeJS Setup"
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      
+      - name: "Npm Cache of ./node_modules"
+        uses: actions/cache@v4
+        with:
+          key: ${{ runner.os }}-npm
+          path: node_modules
+
+      - name: "Install Dependencies"
+        run: npm install
+
+      - name: "Build"
+        run: npm run build
+
+      - name: Upload Build
+        uses: actions/upload-artifact@v4
+        with:
+          name: build
+          path: build/

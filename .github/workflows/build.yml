@@ -12,7 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Set Environment Variables"
-        run: echo "BUILD_NUMBER=$VERSION-npm" >> $GITHUB_ENV
+        run: |
+          echo "BUILD_NUMBER=$VERSION-npm" >> $GITHUB_ENV
+          echo $BUILD_NUMBER
       - name: "Print Environment Variables"
         run: echo $BUILD_NUMBER
   lint:

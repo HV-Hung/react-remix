@@ -9,7 +9,6 @@ on:
 env:
   DEV_IMAGE_NAME: hung6876/react-remix
   VERSION: 1.0.0
-  NODE_VERSION: 22
 jobs:
 
   lint:
@@ -20,7 +19,7 @@ jobs:
       packages: read
       statuses: write
     with:
-      nodejs-version: ${{ env.NODE_VERSION }}
+      nodejs-version: 22
     
   build:
     needs: [approval]

@@ -6,16 +6,8 @@ on:
 env:
   DEV_IMAGE_NAME: hung6876/react-remix
   VERSION: 1.0.0
-
+  NODE_VERSION: 22
 jobs:
-  approval:
-    name: "Manual Approval"
-    runs-on: ubuntu-latest
-    environment:
-      name: approval
-    steps:
-      - name: "Approval step"
-        run: echo approval
 
   lint:
     name: Lint
@@ -24,6 +16,8 @@ jobs:
       contents: read  
       packages: read
       statuses: write
+    with:
+      nodejs-version: ${{ env.NODE_VERSION }}
     
   build:
     needs: [approval]

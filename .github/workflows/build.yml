@@ -23,7 +23,6 @@ jobs:
       nodejs-version: 22
     
   build:
-    needs: [approval]
     runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:

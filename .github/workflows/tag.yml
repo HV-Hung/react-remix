@@ -32,12 +32,12 @@ jobs:
 
       - name: GitHub Create Release
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
           git tag "${VERSION}"
           git push origin "${VERSION}"
 
-          # gh release create "${VERSION}" -t "${VERSION}" --generate-notes --verify-tag --draft=true
+          gh release create "${VERSION}" -t "${VERSION}" --generate-notes --verify-tag --draft=true
       
       - name: Increment Version
         run: |

@@ -42,6 +42,7 @@ jobs:
       - name: Increment Version
         run: |
           python3 update_version.py
+          VERSION=$(jq -r '.version' "package.json")
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
           git add package.json

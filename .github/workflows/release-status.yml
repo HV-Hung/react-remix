@@ -4,11 +4,12 @@ on:
   release:
     types:
       - created
-  
 
 jobs:
   edit-release-status:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Edit release status
         uses: actions/github-script@v7

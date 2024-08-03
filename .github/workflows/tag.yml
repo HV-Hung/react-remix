@@ -23,7 +23,6 @@ jobs:
           VERSION=$(jq -r '.version' "package.json")
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           echo "Version: $VERSION"
-          cat $GITHUB_EVENT_PATH
 
       - name: GitHub CLI Setup
         uses: sersoft-gmbh/setup-gh-cli-action@v2

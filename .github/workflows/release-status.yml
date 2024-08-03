@@ -1,12 +1,10 @@
 name: Edit GitHub Release Status
 
 on:
-  workflow_call:
-    inputs:
-      status:
-        description: 'The new status of the release (draft, prerelease, published)'
-        required: true
-        type: string
+  release:
+    types:
+      - created
+  
 
 jobs:
   edit-release-status:
@@ -17,16 +15,9 @@ jobs:
         with:
           script: |
             const release = context.payload.release;
-            const status = release.draft ? 'draft' : (release.prerelease ? 'prerelease' : 'published');
-            console.log(`Release name: ${release.name}`);
-            console.log(`Release status: ${status}`);
-            
-            const newStatus = core.getInput('status');
             const response = await github.rest.repos.updateRelease({
               owner: context.repo.owner,
               repo: context.repo.repo,
               release_id: release.id,
-              draft: newStatus === 'draft',
-              prerelease: newStatus === 'prerelease'
+              draft: false,
             });
-            core.setOutput('release', response.data);

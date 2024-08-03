@@ -1,0 +1,49 @@
+name: "Create Git Tag"
+on:
+  pull_request_target:
+    types:
+      - "closed"
+    branches:
+      - "main"
+  push:
+
+jobs:
+  create-release:
+    # if: github.event.pull_request.merged == true
+    name: Create Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Version
+        run: |
+          VERSION=$(jq -r '.version' "package.json")
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "Version: $VERSION"
+
+      - name: GitHub CLI Setup
+        uses: sersoft-gmbh/setup-gh-cli-action@v2
+        with:
+          version: stable
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: GitHub Create Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git tag "${VERSION}"
+          git push origin "${VERSION}"
+
+          gh release create "${VERSION}" -t "${VERSION}" --generate-notes --verify-tag
+      
+      - name: Increment Version
+        run: |
+          python3 update_version.py
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add package.json
+          git commit -m "[skip ci] Increment version to ${VERSION} by GitHub Actions"
+          git push origin main

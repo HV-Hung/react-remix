@@ -37,7 +37,7 @@ jobs:
           git tag "${VERSION}"
           git push origin "${VERSION}"
 
-          # gh release create "${VERSION}" -t "${VERSION}" --generate-notes --verify-tag
+          # gh release create "${VERSION}" -t "${VERSION}" --generate-notes --verify-tag --draft=true
       
       - name: Increment Version
         run: |

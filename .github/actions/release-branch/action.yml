@@ -10,7 +10,9 @@ runs:
 
         RELEASE_BRANCH="release-${MAJOR_VERSION}.${MINOR_VERSION}"
 
-        if git rev-parse --verify --quiet "$RELEASE_BRANCH"; then
+        git branch
+
+        if git show-ref --quiet "$RELEASE_BRANCH"; then
           echo "Branch '$RELEASE_BRANCH' already exists."
           echo "Updating branch '$RELEASE_BRANCH' with version '$VERSION'"
 

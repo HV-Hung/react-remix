@@ -10,7 +10,7 @@ runs:
 
         RELEASE_BRANCH="release-${MAJOR_VERSION}.${MINOR_VERSION}"
 
-        git branch
+        git show-ref
 
         if git show-ref --quiet "$RELEASE_BRANCH"; then
           echo "Branch '$RELEASE_BRANCH' already exists."

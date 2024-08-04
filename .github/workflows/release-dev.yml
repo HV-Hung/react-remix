@@ -28,18 +28,19 @@ jobs:
           echo "Major Version: $MAJOR_VERSION"
           echo "Minor Version: $MINOR_VERSION"
           echo "Patch Version: $PATCH_VERSION"
-  approval:
-    name: Continue Deploy to NonProd
-    needs: deploy-dev
-    runs-on: ubuntu-latest
-    environment: approval
-    steps:
-      - name: wait for approval
-        run: echo "Waiting for manually checking Dev deployment and confirming to deploy to NonProd..."
+  # approval:
+  #   name: Continue Deploy to NonProd
+  #   needs: deploy-dev
+  #   runs-on: ubuntu-latest
+  #   environment: approval
+  #   steps:
+  #     - name: wait for approval
+  #       run: echo "Waiting for manually checking Dev deployment and confirming to deploy to NonProd..."
   
   release-branch:
     name: Release Branch
-    needs: approval
+    # needs: approval
+    needs: deploy-dev
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

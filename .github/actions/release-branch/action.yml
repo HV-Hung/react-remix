@@ -14,7 +14,7 @@ runs:
       env:
           GH_TOKEN: ${{ inputs.github-token }}
       run: |
-        config --global --add url."https://${{ env.GH_TOKEN }}:x-oauth-basic@github".insteadOf https://github
+        git config --global --add url."https://${{ env.GH_TOKEN }}:x-oauth-basic@github".insteadOf https://github
 
         RELEASE_BRANCH="release-${MAJOR_VERSION}.${MINOR_VERSION}"
 

@@ -1,0 +1,58 @@
+name: Release Dev
+
+on:
+  release:
+    types:
+      - created
+  
+jobs:
+  deploy-dev:
+    name: Deploy to Dev
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Version
+        uses: ./.github/actions/version
+
+      - name: Mark Release as Draft
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+        run: gh release edit "${VERSION}" --draft=true
+
+      - name: Deploy to Dev
+        run: |
+          echo "Deploying to Dev"
+          echo "Version: $VERSION"
+          echo "Major Version: $MAJOR_VERSION"
+          echo "Minor Version: $MINOR_VERSION"
+          echo "Patch Version: $PATCH_VERSION"
+  approval:
+    name: Continue Deploy to NonProd
+    runs-on: ubuntu-latest
+    environment: approval
+    steps:
+      - name: wait for approval
+        run: echo "Waiting for manually checking Dev deployment and confirming to deploy to NonProd..."
+  
+  release-branch:
+    name: Deploy to Dev
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Version
+        uses: ./.github/actions/version
+        
+      - name: Release Branch
+        uses: ./.github/actions/release-branch
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+
+      - name: Mark Release as Pre-Release
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+        run: gh release edit "${VERSION}" --draft=false --prerelease=true
+  

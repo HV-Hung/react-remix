@@ -1,0 +1,31 @@
+name: Release Branch
+description: Create or update a Release branch
+
+runs:
+  using: composite
+  steps:
+    - name: Release Branch
+      shell: bash
+      run: |
+        RELEASE_BRANCH="release-${MAJOR_VERSION}.${MINOR_VERSION}"
+
+        if git rev-parse --verify --quiet "$RELEASE_BRANCH"; then
+          echo "Branch '$RELEASE_BRANCH' already exists."
+          echo "Updating branch '$RELEASE_BRANCH' with version '$VERSION'..."
+
+          git checkout "$RELEASE_BRANCH"
+          git merge $VERSION
+          git push origin "$RELEASE_BRANCH"
+
+          echo "Branch '$RELEASE_BRANCH' updated."
+          
+        else
+          echo "Branch '$BRANCH_NAME' does not exist."
+          echo "Creating branch '$RELEASE_BRANCH' with version '$VERSION'..."
+
+          git checkout -b "$RELEASE_BRANCH" $VERSION
+          git push --set-upstream origin "$RELEASE_BRANCH"
+
+          echo "Branch '$RELEASE_BRANCH' created."
+        fi
+

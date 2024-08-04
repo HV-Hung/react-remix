@@ -1,0 +1,19 @@
+name: Version
+description: versioning
+
+runs:
+  using: composite
+  steps:
+    - name: Version
+      shell: bash
+      run: |
+        VERSION=$(jq -r '.version' "package.json")
+        echo "VERSION=$VERSION" >> $GITHUB_ENV
+        echo "MAJOR_VERSION=$(echo $VERSION | cut -d '.' -f 1)" >> $GITHUB_ENV
+        echo "MINOR_VERSION=$(echo $VERSION | cut -d '.' -f 2)" >> $GITHUB_ENV
+        echo "PATCH_VERSION=$(echo $VERSION | cut -d '.' -f 3)" >> $GITHUB_ENV
+        echo "Version: $VERSION"
+        echo "Major Version: $MAJOR_VERSION"
+        echo "Minor Version: $MINOR_VERSION"
+        echo "Patch Version: $PATCH_VERSION"
+

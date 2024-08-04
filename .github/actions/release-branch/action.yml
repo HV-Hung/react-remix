@@ -1,20 +1,12 @@
 name: Release Branch
 description: Create or update a Release branch
 
-inputs:
-  github-token:
-    description: 'GitHub Token'
-    required: true
-
 runs:
   using: composite
   steps:
     - name: Release Branch
       shell: bash
-      env:
-          GH_TOKEN: ${{ inputs.github-token }}
       run: |
-        git config --global --add url."https://${{ env.GH_TOKEN }}:x-oauth-basic@github".insteadOf https://github
 
         RELEASE_BRANCH="release-${MAJOR_VERSION}.${MINOR_VERSION}"
 

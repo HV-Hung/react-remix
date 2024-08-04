@@ -7,8 +7,10 @@ on:
   
 jobs:
   deploy-nonprod:
-    name: Deploy to NonProd
+    name: ${{ github.event.ref }}
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     needs: deploy-dev
     steps:
       - name: Checkout

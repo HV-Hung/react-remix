@@ -9,6 +9,8 @@ jobs:
   deploy-dev:
     name: Deploy to Dev
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -42,6 +44,8 @@ jobs:
     # needs: approval
     needs: deploy-dev
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -51,8 +55,6 @@ jobs:
         
       - name: Release Branch
         uses: ./.github/actions/release-branch
-        with:
-          github-token: ${{ secrets.PAT_TOKEN }}
 
       - name: Mark Release as Pre-Release
         env:

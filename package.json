@@ -1,6 +1,6 @@
 {
   "name": "react-remix",
-  "version": "1.0.22",
+  "version": "1.0.23",
   "private": true,
   "sideEffects": false,
   "type": "module",

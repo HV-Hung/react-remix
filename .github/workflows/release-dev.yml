@@ -30,6 +30,7 @@ jobs:
           echo "Patch Version: $PATCH_VERSION"
   approval:
     name: Continue Deploy to NonProd
+    needs: deploy-dev
     runs-on: ubuntu-latest
     environment: approval
     steps:
@@ -37,7 +38,8 @@ jobs:
         run: echo "Waiting for manually checking Dev deployment and confirming to deploy to NonProd..."
   
   release-branch:
-    name: Deploy to Dev
+    name: Release Branch
+    needs: approval
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -48,8 +50,8 @@ jobs:
         
       - name: Release Branch
         uses: ./.github/actions/release-branch
-        env:
-          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+        with:
+          github-token: ${{ secrets.PAT_TOKEN }}
 
       - name: Mark Release as Pre-Release
         env:

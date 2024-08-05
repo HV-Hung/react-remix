@@ -7,7 +7,7 @@ on:
   
 jobs:
   deploy-nonprod:
-    name: ${{ github.event.ref }}
+    name: ${{ github.ref }}
     runs-on: ubuntu-latest
     permissions:
       contents: write

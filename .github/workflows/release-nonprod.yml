@@ -11,7 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    needs: deploy-dev
     steps:
       - name: Checkout
         uses: actions/checkout@v4

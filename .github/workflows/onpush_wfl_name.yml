@@ -1,15 +1,15 @@
-name: Test workflow name
+name: ${{ github.workflow }} # Test workflow name
 
 on:
   push:
   
 jobs:
   test-checkout:
+    name: Test Checkout
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
-     
       - name: Test workflow name
         run: |
           echo "Test workflow name"

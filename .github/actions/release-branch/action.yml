@@ -15,7 +15,7 @@ runs:
           echo "Updating branch '$RELEASE_BRANCH' with version '$VERSION'"
 
           git checkout "$RELEASE_BRANCH"
-          git merge $VERSION
+          git pull origin $VERSION
           git push origin "$RELEASE_BRANCH"
 
           echo "Branch '$RELEASE_BRANCH' updated."

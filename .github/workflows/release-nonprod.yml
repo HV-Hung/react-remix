@@ -1,5 +1,5 @@
 name: Release NonProd
-run-name: ${{ github.ref_name }}
+run-name: Deploy ${{ github.ref_name }} to NonProd
 on:
   push:
     branches:

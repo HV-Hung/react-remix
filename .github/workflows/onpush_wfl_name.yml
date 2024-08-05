@@ -1,7 +1,9 @@
 name: Test workflow name
-run-name: Deploy NonProd ${{ github.ref_name }}
+run-name: ${{ github.ref_name }}
 on:
   push:
+    branches:
+      - "!**"
   
 jobs:
   test-checkout:

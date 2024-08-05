@@ -1,5 +1,5 @@
-name: ${{ github.workflow }} # Test workflow name
-
+name: Test workflow name
+run-name: Deploy NonProd
 on:
   push:
   

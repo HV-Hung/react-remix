@@ -1,0 +1,15 @@
+name: Test workflow name
+
+on:
+  push:
+  
+jobs:
+  test-checkout:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+     
+      - name: Test workflow name
+        run: |
+          echo "Test workflow name"
